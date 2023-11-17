@@ -1,4 +1,4 @@
-const db = require('./database'); 
+const db = require('/Dev/finalpp-main/backend/database'); 
 
 // Função para verificar as credenciais de login
 function verificarCredenciais(email, senha, callback) {

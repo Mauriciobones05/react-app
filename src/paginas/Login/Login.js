@@ -13,7 +13,7 @@ function Login() {
                     <Input variant='Email' placeholder='Digite seu email' width='90%' height='35px'/>
 
                     <Texto>Senha</Texto>
-                    <Input variant='Senha' placeholder='Digite sua senha' width='90%' height='35px'/>
+                    <Input type='password' variant='Senha' placeholder='Digite sua senha' width='90%' height='35px'/>
                 </Estilização>
                 <Link to="/Cadastro">
                     <Button colorScheme='blue' variant='link' marginLeft='290px'>Cadastrar</Button>
