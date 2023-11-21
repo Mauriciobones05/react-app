@@ -1,6 +1,5 @@
 import { MenuContainer } from "./Footer.jsx";
 import { Tabs, TabList, Tab } from '@chakra-ui/react'
-import { NormalIcon } from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
 
 

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 3001;
 //const router = express.Router();
@@ -8,6 +9,7 @@ const rota = require('/Dev/finalpp-main/backend/routes/authRoutes');
 
 // Configuração do middleware para permitir requisições JSON
 app.use(express.json());
+app.use(cors());
 
 app.get('/usuarios', (req, res) => {
   db.query('SELECT * FROM usuarios ORDER BY id',(err,result) => {
@@ -18,49 +20,15 @@ app.get('/usuarios', (req, res) => {
   })
 });
 
-// router.post('/login', (req, res) => {
-//   const { email, senha } = req.body;
-
-//   verificarCredenciais(email, senha, (err, usuario) => {
-//     if (err) {
-//       return res.status(401).json({ mensagem: 'Email e/ou Senha inválido' });
-//     }
-
-//     return res.status(200).json({ mensagem: 'Login bem-sucedido', usuario });
-//   });
-// });
-
-// rotina de cadastro
-// router.post('/cadastro', (req, res) => {
-// const { nome, email, senha } = req.body;
-
-//   // verifica se o email já está em uso
-//   const verificaEmailQuery = 'SELECT * FROM usuarios WHERE email = ?';
-//   db.query(verificaEmailQuery, [email], (err, result) => {
-//     if (err) {
-//       console.error('Erro na consulta SQL:', err);
-//       return res.status(500).json({ mensagem: 'Erro interno' });
-//     }
-
-//     if (result.length > 0) {
-//       // Um usuário com o mesmo email já existe
-//       return res.status(400).json({ mensagem: 'Email já está em uso' });
-//     } else {
-//       const insertQuery = 'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?);';
-//       db.query(insertQuery, [nome, email, senha], (err, result) => {
-//         if (err) {
-//           console.error('Erro na consulta SQL:', err);
-//           return res.status(500).json({ mensagem: 'Erro interno' });
-//         }
-        
-//         return res.status(201).json({ mensagem: 'Registro bem-sucedido' });
-//       });
-//     }
-//   });
-// });
-
 app.post('/cadastro',async(req,res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
   const resultadoCadastro = await rota.insertUsuario(req.body);
+
+  const data = await res.json();
+  console.log(data); 
 
   // Verifique o status retornado pela função insertUsuario
   if (resultadoCadastro.status === 201) {
@@ -70,7 +38,23 @@ app.post('/cadastro',async(req,res) => {
   } else {
     return res.status(500).json({ mensagem: 'Erro interno' });
   }
-})
+});
+
+app.post('/login', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  const resultadoConsulta = await rota.verificaUsuario(req.body);
+
+  if (resultadoConsulta.status === 200) {
+    return res.status(200).json({ mensagem: 'Login realizado com sucesso' });
+  } else if (resultadoConsulta.status === 400) {
+    return res.status(400).json({ mensagem: 'Email e/ou Senha inválidos', erro: resultadoConsulta.erro });
+  } else {
+    return res.status(500).json({ mensagem: 'Erro interno', erro: resultadoConsulta.erro });
+  }
+});
 
 //module.exports = router;
 

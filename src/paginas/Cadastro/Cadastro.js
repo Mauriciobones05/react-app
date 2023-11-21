@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { Fundo, Estilo, Card, BotaoCadastrar, BotaoVoltar, Label } from "./Cadastro.jsx";
 import { Input, Button, Text } from '@chakra-ui/react';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom"; // Importe useHistory aqui
 import setaImg from '../../assets/seta.png';
+import MsgAviso from '../MensagemAviso/MensagemAviso.js'; 
 
 function Cadastro() {
- //const history = useHistory();
+  const navegate = useNavigate();
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-
+  const [mostrarMensagem, setMostrarMensagem] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+  const [tipoMensagem, setTipoMensagem] = useState('');
+  
   const handleCadastro = async () => {
     try {
       const response = await fetch('http://localhost:3001/cadastro', {
@@ -24,18 +28,29 @@ function Cadastro() {
       const data = await response.json();
 
       if (response.status === 201) {
-        console.log(data.mensagem);
+        setMensagem('Cadastro realizado');
+        setTipoMensagem('sucesso');
+        setMostrarMensagem(true);
 
+        setTimeout(() => {
+          navegate('/login');
+        }, 2000);
       } else if (response.status === 400) {
-        console.log(data.mensagem);
+        setMensagem(data.mensagem);
+        setTipoMensagem('erro');
+        setMostrarMensagem(true);
       } else {
-        console.error('Erro ao cadastrar:', data.mensagem);
+        setMensagem(`Erro ao cadastrar: ${data.mensagem}`);
+        setTipoMensagem('erro');
+        setMostrarMensagem(true);
       }
     } catch (error) {
-      console.error('Erro na solicitação de cadastro:', error);
+      setMensagem(`Erro na solicitação de cadastro: ${error.message}`);
+      setTipoMensagem('erro');
+      setMostrarMensagem(true);
     }
   };
-
+  
   return (
     <>
       <Fundo>
@@ -66,9 +81,13 @@ function Cadastro() {
           </Estilo>
         </Card>
 
+        
+
         <BotaoCadastrar>
           <Button onClick={handleCadastro} background="#0D99FF" mt='60' color='white' height='50px' width='110%' borderRadius='70px' fontFamily='arial'>Cadastrar</Button>
         </BotaoCadastrar>
+        {/* Exibir a mensagem de aviso */}
+        {mostrarMensagem && <MsgAviso mensagem={mensagem} tipo={tipoMensagem} />}
       </Fundo>
     </>
   );
