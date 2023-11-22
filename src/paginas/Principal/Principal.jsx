@@ -9,18 +9,18 @@ export const Fundo = styled.div`
     flex-direction: column;
 `
 export const CardP = styled.div`
-    background: #fff;
-    width: 43vh;
+    position: relative; 
+    background: #FFF;
+    width: 70%;
     height: 8vh;
     padding: 1rem;
     border-radius: 30vh;
-    margin-left: 1vh;
+    margin-left: 10vh;
     align-items: center;
     margin-top: 15%;
     display: flex;
-    
-    
-`
+`;
+
 export const CardR = styled.div`
     background: #fff;
     width: 43vh;
@@ -57,3 +57,18 @@ export const Imagem1 = styled.img`
 
 `
 
+export const BotaoVoltar = styled.div`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+`;
+
+export const Label = styled.div`
+    position: absolute;
+    left: 175px;
+    top: 20px; 
+    width: 80%;
+    
+`

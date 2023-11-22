@@ -25,7 +25,6 @@ function Login() {
 
       // Verifique a resposta da API
       if (resposta.ok) {
-        // Login bem-sucedido, redirecione para a página principal
         navegate('/Principal');
       } else {
         // Exiba uma mensagem de erro ou tome outra ação apropriada
@@ -70,10 +69,10 @@ function Login() {
       </CardLogin>
 
       <BotaoEntrar>
-         <Link to="/Principal">
-           <Button background="#0D99FF" color='white' height='50px' width='40%' marginLeft='30%' borderRadius='70px' // onClick={handleLogin}
+        <Link to="/Principal">
+           <Button background="#0D99FF" color='white' height='50px' width='40%' marginLeft='30%' borderRadius='70px' //onClick={handleLogin}
            >Entrar </Button>
-         </Link>
+        </Link>
       </BotaoEntrar>
     </Fundo>
   );

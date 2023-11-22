@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Fundo, Estilo, Card, BotaoCadastrar, BotaoVoltar, Label } from "./Cadastro.jsx";
 import { Input, Button, Text } from '@chakra-ui/react';
-import { Link,useNavigate } from "react-router-dom"; // Importe useHistory aqui
+import { Link,useNavigate } from "react-router-dom";
 import setaImg from '../../assets/seta.png';
 import MsgAviso from '../MensagemAviso/MensagemAviso.js'; 
 

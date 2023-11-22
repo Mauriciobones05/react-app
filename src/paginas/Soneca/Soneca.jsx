@@ -7,3 +7,11 @@ export const Fundo = styled.div`
     display: flex;
     flex-direction: column;
 `
+
+export const BotaoVoltar = styled.div`
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+`;

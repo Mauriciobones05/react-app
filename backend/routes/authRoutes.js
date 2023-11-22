@@ -27,19 +27,21 @@ async function insertUsuario(usuario) {
 
 async function verificaUsuario(usuario) {
   try {
-    const selectQuery = "SELECT * FROM usuarios WHERE email = '?' AND senha = '?'";
+    const selectQuery = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
     const values = [usuario.email, usuario.senha];
 
+    console.log('Consulta SQL:', selectQuery);
+    console.log('Valores:', values);
+
     const resultadoConsulta = await db.query(selectQuery, values);
-    //const totalConsulta = resultadoConsulta[0];
 
     if (resultadoConsulta.length > 0) {
       return { status: 200, mensagem: 'Login realizado com sucesso' };
     } else {
-      return { status: 400, mensagem: 'Email e/ou Senhaaaaa inválidos' };
+      return { status: 400, mensagem: 'Email e/ou Senha inválidos' };
     }
   } catch (error) {
-    console.error('Erro na consulta SQL:', error);
+    console.error('Erro na consulta SQL:', error.message); // Adicione esta linha
     return { status: 500, mensagem: 'Erro interno', erro: error.message };
   }
 }
